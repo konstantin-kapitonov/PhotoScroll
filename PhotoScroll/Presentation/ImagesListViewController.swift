@@ -8,8 +8,11 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
-    
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    // MARK: - IBOutlets
+    @IBOutlet private var tableView: UITableView!
+
+    // MARK: - Properties
+    private let photosName = (0..<20).map { "\($0)" }
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -18,16 +21,26 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
 
-    @IBOutlet private var tableView: UITableView!
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.rowHeight = 200
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
+    
+    // MARK: - Private Methods
+    private func configCell(for cell: ImagesListCell, at index: Int) {
+        guard let image = UIImage(named: photosName[index]) else {
+            return
+        }
+
+        cell.photoView.image = image
+        cell.imageDateLabel.text = dateFormatter.string(from: Date())
+        cell.likeButton.setImage(index % 2 == 0 ? UIImage.active : UIImage.noActive, for: .normal)
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         photosName.count
@@ -45,18 +58,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
-extension ImagesListViewController {
-    private func configCell(for cell: ImagesListCell, at index: Int) {
-        guard let image = UIImage(named: photosName[index]) else {
-            return
-        }
-
-        cell.photoView.image = image
-        cell.imageDateLabel.text = dateFormatter.string(from: Date())
-        cell.likeButton.setImage(index % 2 == 0 ? UIImage.active : UIImage.noActive, for: .normal)
-    }
-}
-
+// MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
