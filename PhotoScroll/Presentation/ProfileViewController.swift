@@ -8,11 +8,11 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     // MARK: - Properties
-    private var imageView = UIImageView()
-    private var exitButton = UIButton()
-    private var nameLabel = UILabel()
-    private var userNameLabel = UILabel()
-    private var descriptionLabel = UILabel()
+    private lazy var imageView = UIImageView()
+    private lazy var exitButton = UIButton()
+    private lazy var nameLabel = UILabel()
+    private lazy var userNameLabel = UILabel()
+    private lazy var descriptionLabel = UILabel()
 
     // MARK: - Lifecycle
     
@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
         configureProfileImageView()
         configureExitButton()
         configureNameLabel()
-        configureUserNameLable()
+        configureUserNameLabel()
         configureDescriptionLabel()
     }
     
@@ -77,7 +77,7 @@ final class ProfileViewController: UIViewController {
         ].forEach { $0.isActive = true }
     }
     
-    private func configureUserNameLable() {
+    private func configureUserNameLabel() {
         userNameLabel.text = "@ekaterina_nov"
         userNameLabel.font = .systemFont(ofSize: 13, weight: .regular)
         userNameLabel.textColor = .ypGray

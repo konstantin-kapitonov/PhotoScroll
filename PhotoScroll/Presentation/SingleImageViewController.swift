@@ -68,7 +68,7 @@ final class SingleImageViewController: UIViewController {
         guard let image else { return }
 
         imageView.image = image
-        imageView.frame.size = image.size
+        imageView.frame = CGRect(origin: .zero, size: image.size)
 
         rescaleAndCenterImageInScrollView(image: image)
     }
