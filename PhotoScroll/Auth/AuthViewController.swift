@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 protocol AuthViewControllerDelegate: AnyObject {
     func didAuthenticate(_ vc: AuthViewController)
@@ -55,6 +56,16 @@ final class AuthViewController: UIViewController {
         authButton.layer.cornerRadius = 16
         authButton.layer.masksToBounds = true
     }
+
+    private func showLoginErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - WebViewViewControllerDelegate
@@ -62,15 +73,21 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         vc.navigationController?.popViewController(animated: true)
-
+		
+		// Показываем индикатор загрузки и блокируем пользовательское взаимодействие
+		UIBlockingProgressHUD.show()
+		
         oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+			// Скрываем индикатор загрузки
+			UIBlockingProgressHUD.dismiss()
+			
             switch result {
             case .success(let token):
                 guard let self else { return }
                 self.oauth2TokenStorage.token = token
                 self.delegate?.didAuthenticate(self)
             case .failure:
-                break
+                self?.showLoginErrorAlert()
             }
         }
     }
