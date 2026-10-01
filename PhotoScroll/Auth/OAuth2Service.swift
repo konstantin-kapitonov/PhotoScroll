@@ -5,11 +5,16 @@
 //  Created by Капитонов Константин Евгеньевич on 07.09.2026.
 //
 import Foundation
+import Logging
 
 final class OAuth2Service {
     static let shared = OAuth2Service()
 	
-	private let decoder = JSONDecoder()
+    private let logger = Logger(label: "PhotoScroll.OAuth2Service")
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    private var activeRequestID: UUID?
     
     private init() { }
     
@@ -17,40 +22,51 @@ final class OAuth2Service {
         code: String,
         completion: @escaping (Result<String, Error>) -> Void
     ) {
-        guard let request = makeOAuthTokenRequest(code: code) else {
-            DispatchQueue.main.async {
-                completion(.failure(NetworkError.invalidRequest))
-            }
+        assert(Thread.isMainThread)
+
+        if lastCode == code {
+            completion(.failure(NetworkError.invalidRequest))
             return
         }
 
-        let task = URLSession.shared.data(for: request) { [weak decoder] result in
-			guard let decoder else { return }
+        task?.cancel()
+
+        guard let request = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(NetworkError.invalidRequest))
+            return
+        }
+
+        let requestID = UUID()
+        activeRequestID = requestID
+        lastCode = code
+
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+			guard let self, self.activeRequestID == requestID else { return }
+
+            self.task = nil
+            self.lastCode = nil
+            self.activeRequestID = nil
+
             switch result {
-            case .success(let data):
-                do {
-					let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    completion(.success(responseBody.accessToken))
-                } catch {
-                    print("OAuth token decoding error: \(error)")
-                    completion(.failure(NetworkError.decodingError(error)))
-                }
+            case .success(let responseBody):
+                completion(.success(responseBody.accessToken))
 
             case .failure(let error):
                 switch error {
                 case NetworkError.httpStatusCode(let statusCode):
-                    print("Unsplash service error: HTTP status code \(statusCode)")
+                    logger.error("Unsplash service error: HTTP status code \(statusCode)")
                 case NetworkError.urlRequestError(let underlyingError):
-                    print("OAuth token network error: \(underlyingError)")
+                    logger.error("OAuth token network error: \(underlyingError)")
                 case NetworkError.urlSessionError:
-                    print("OAuth token network error: invalid URLSession response")
+                    logger.error("OAuth token network error: invalid URLSession response")
                 default:
-                    print("OAuth token request error: \(error)")
+                    logger.error("OAuth token request error: \(error)")
                 }
                 completion(.failure(error))
             }
         }
 
+        self.task = task
         task.resume()
     }
     
