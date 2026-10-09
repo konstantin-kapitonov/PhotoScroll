@@ -5,6 +5,7 @@
 //  Created by Капитонов Константин Евгеньевич on 15.08.2026.
 //
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     // MARK: - Constants
@@ -22,6 +23,7 @@ final class SingleImageViewController: UIViewController {
     // MARK: - Properties
 
     private var image: UIImage?
+    private var fullImageURL: URL?
 
     // MARK: - Lifecycle
 
@@ -30,15 +32,18 @@ final class SingleImageViewController: UIViewController {
 
         configureScrollView()
         configureImageView()
+        loadFullImage()
     }
 
     // MARK: - Configuration
 
-    func configure(with image: UIImage) {
+    func configure(with image: UIImage, fullImageURL: URL) {
         self.image = image
+        self.fullImageURL = fullImageURL
 
         guard isViewLoaded else { return }
         configureImageView()
+        loadFullImage()
     }
 
     // MARK: - IBActions
@@ -72,6 +77,39 @@ final class SingleImageViewController: UIViewController {
 
         rescaleAndCenterImageInScrollView(image: image)
     }
+
+	private func loadFullImage() {
+		guard let fullImageURL else { return }
+
+		UIBlockingProgressHUD.show()
+		imageView.contentMode = .center
+		imageView.kf.setImage(
+			with: fullImageURL,
+			placeholder: UIImage(named: "photo_stub")
+		) { [weak self] result in
+			UIBlockingProgressHUD.dismiss()
+
+			guard let self else { return }
+			switch result {
+			case .success(let imageResult):
+				self.image = imageResult.image
+				self.imageView.contentMode = .scaleAspectFit
+				self.configureImageView()
+			case .failure:
+				self.showError()
+			}
+		}
+	}
+
+	private func showError() {
+		let alert = UIAlertController(
+			title: "Что-то пошло не так(",
+			message: "Не удалось загрузить изображение",
+			preferredStyle: .alert
+		)
+		alert.addAction(UIAlertAction(title: "OK", style: .default))
+		present(alert, animated: true)
+	}
 
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         view.layoutIfNeeded()

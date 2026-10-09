@@ -6,6 +6,7 @@
 //
 import Foundation
 import CoreGraphics
+import Logging
 
 struct Photo {
 	let id: String
@@ -52,6 +53,7 @@ final class ImagesListService {
 	private var task: URLSessionTask?
 	private let urlSession = URLSession.shared
 	private let dateFormatter = ISO8601DateFormatter()
+	private let logger = Logger(label: "PhotoScroll.ImagesListService")
 
 	private init() { }
 
@@ -97,6 +99,55 @@ final class ImagesListService {
 		task?.resume()
 	}
 
+	func changeLike(
+		photoId: String,
+		isLike: Bool,
+		_ completion: @escaping (Result<Void, Error>) -> Void
+	) {
+		guard let request = makeLikeRequest(photoId: photoId, isLike: isLike) else {
+			completion(.failure(NetworkError.invalidRequest))
+			return
+		}
+
+		let task = urlSession.data(for: request) { [weak self] result in
+			guard let self else { return }
+
+			switch result {
+			case .success(let data):
+				let responseBody = String(data: data, encoding: .utf8) ?? "<non-UTF-8 data>"
+				self.logger.info("Like request response: \(responseBody)")
+
+				if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+					let photo = self.photos[index]
+					let newPhoto = Photo(
+						id: photo.id,
+						size: photo.size,
+						createdAt: photo.createdAt,
+						welcomeDescription: photo.welcomeDescription,
+						thumbImageURL: photo.thumbImageURL,
+						largeImageURL: photo.largeImageURL,
+						isLiked: !photo.isLiked
+					)
+					self.logger.info(
+						"Updating like for photo \(photoId): \(photo.isLiked) -> \(newPhoto.isLiked)"
+					)
+					self.photos[index] = newPhoto
+					NotificationCenter.default.post(
+						name: ImagesListService.didChangeNotification,
+						object: self
+					)
+				}
+				self.logger.info("Like request completed successfully for photo \(photoId)")
+				completion(.success(()))
+
+			case .failure(let error):
+				self.logger.error("Like request failed for photo \(photoId): \(error)")
+				completion(.failure(error))
+			}
+		}
+		task.resume()
+	}
+
 	private func makePhotosRequest() -> URLRequest? {
 		guard let token = OAuth2TokenStorage.shared.token,
 			  var urlComponents = URLComponents(string: "https://api.unsplash.com/photos") else {
@@ -113,6 +164,19 @@ final class ImagesListService {
 
 		var request = URLRequest(url: url)
 		request.httpMethod = HTTPMethod.get
+		request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+		return request
+	}
+
+	private func makeLikeRequest(photoId: String, isLike: Bool) -> URLRequest? {
+		guard let token = OAuth2TokenStorage.shared.token,
+			  let encodedPhotoId = photoId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+			  let url = URL(string: "https://api.unsplash.com/photos/\(encodedPhotoId)/like") else {
+			return nil
+		}
+
+		var request = URLRequest(url: url)
+		request.httpMethod = isLike ? HTTPMethod.delete : HTTPMethod.post
 		request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 		return request
 	}
