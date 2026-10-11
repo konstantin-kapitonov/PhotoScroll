@@ -5,6 +5,7 @@
 //  Created by Капитонов Константин Евгеньевич on 29.07.2026.
 //
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     // MARK: - IBOutlets
@@ -29,6 +30,13 @@ final class ImagesListCell: UITableViewCell {
         super.layoutSubviews()
         gradientLayer.frame = gradientBackgroundView.bounds
     }
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		photoView.kf.cancelDownloadTask()
+		photoView.image = nil
+	}
     
     // MARK: - Private Methods
     private func configureGradientView() {
@@ -53,6 +61,7 @@ final class ImagesListCell: UITableViewCell {
     
     private func configurePhotoView() {
         photoView.layer.cornerRadius = 16
-        photoView.layer.masksToBounds = true
+		photoView.layer.masksToBounds = true
+		photoView.backgroundColor = UIColor.ypWhiteAlpha50
     }
 }

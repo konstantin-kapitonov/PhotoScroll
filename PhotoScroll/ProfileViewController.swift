@@ -19,6 +19,7 @@ final class ProfileViewController: UIViewController {
 	private let logger = Logger(label: "PhotoScroll.ProfileViewController")
 	private let profileService = ProfileService.shared
 	private let profileImageService = ProfileImageService.shared
+	private let profileLogoutService = ProfileLogoutService.shared
 	
 	private var profileImageServiceObserver: NSObjectProtocol?
 
@@ -156,6 +157,20 @@ final class ProfileViewController: UIViewController {
 	}
 
     @objc private func onExitButtonTap(_ sender: UIButton) {
-        
+		let alert = UIAlertController(
+			title: "Пока, пока!",
+			message: "Уверены, что хотите выйти?",
+			preferredStyle: .alert
+		)
+		alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+			self?.logout()
+		})
+		alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+		present(alert, animated: true)
     }
+
+	private func logout() {
+		profileLogoutService.logout()
+		view.window?.rootViewController = SplashViewController()
+	}
 }
