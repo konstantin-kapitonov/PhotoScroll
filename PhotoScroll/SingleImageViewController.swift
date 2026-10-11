@@ -85,7 +85,7 @@ final class SingleImageViewController: UIViewController {
 		imageView.contentMode = .center
 		imageView.kf.setImage(
 			with: fullImageURL,
-			placeholder: UIImage(named: "photo_stub")
+			placeholder: UIImage.photoStub
 		) { [weak self] result in
 			UIBlockingProgressHUD.dismiss()
 

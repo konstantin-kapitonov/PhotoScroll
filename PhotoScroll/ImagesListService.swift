@@ -28,13 +28,9 @@ struct PhotoResult: Decodable {
 	let urls: UrlsResult
 
 	private enum CodingKeys: String, CodingKey {
-		case id
+		case id, width, height, description, urls
 		case createdAt = "created_at"
-		case width
-		case height
-		case description
 		case likedByUser = "liked_by_user"
-		case urls
 	}
 }
 
@@ -44,7 +40,7 @@ struct UrlsResult: Decodable {
 }
 
 final class ImagesListService {
-	static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+	static let didChangeNotification = Notification.Name( "ImagesListServiceDidChange")
 	static let shared = ImagesListService()
 
 	private(set) var photos: [Photo] = []
