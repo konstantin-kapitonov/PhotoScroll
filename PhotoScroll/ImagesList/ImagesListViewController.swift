@@ -20,10 +20,9 @@ final class ImagesListViewController: UIViewController {
 
     // MARK: - Properties
     
-	private let imagesListService: ImagesListService = .shared
 	private var photos: [Photo] = []
-	private var imagesListServiceObserver: NSObjectProtocol?
 	private let logger = Logger(label: "PhotoScroll.ImagesListViewController")
+	private var presenter: ImagesListPresenterProtocol!
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -38,28 +37,21 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
 
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-		imagesListServiceObserver = NotificationCenter.default.addObserver(
-			forName: ImagesListService.didChangeNotification,
-			object: imagesListService,
-			queue: .main
-		) { [weak self] _ in
-			self?.updateTableViewAnimated()
-		}
-		imagesListService.fetchPhotosNextPage()
+		photos = presenter.photos
+		presenter.viewDidLoad()
     }
 
-	deinit {
-		if let imagesListServiceObserver {
-			NotificationCenter.default.removeObserver(imagesListServiceObserver)
-		}
+	func configure(_ presenter: ImagesListPresenterProtocol) {
+		self.presenter = presenter
+		presenter.view = self
 	}
     
     // MARK: - Private Methods
 
 	func updateTableViewAnimated() {
 		let oldCount = photos.count
-		let newCount = imagesListService.photos.count
-		photos = imagesListService.photos
+		let newCount = presenter.photos.count
+		photos = presenter.photos
 		if oldCount != newCount {
 			tableView.performBatchUpdates {
 				let indexPaths = (oldCount..<newCount).map { i in
@@ -98,15 +90,14 @@ final class ImagesListViewController: UIViewController {
 		)
 		guard let indexPath = tableView.indexPathForRow(at: buttonCenter) else { return }
 
-		let photo = photos[indexPath.row]
 		button.isEnabled = false
-		imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
+		presenter.changeLike(forPhotoAt: indexPath.row) { [weak self] result in
 			button.isEnabled = true
 			switch result {
 			case .success:
-				self?.logger.info("Like change completed for photo \(photo.id)")
+				self?.logger.info("Like change completed")
 			case .failure(let error):
-				self?.logger.error("Like change failed for photo \(photo.id): \(error)")
+				self?.logger.error("Like change failed: \(error)")
 			}
 		}
 	}
@@ -178,7 +169,9 @@ extension ImagesListViewController: UITableViewDelegate {
 	  forRowAt indexPath: IndexPath
 	) {
 		if indexPath.row == photos.count - 1 {
-			imagesListService.fetchPhotosNextPage()
+			presenter.fetchNextPageIfNeeded(for: indexPath.row)
 		}
 	}
 }
+
+extension ImagesListViewController: ImagesListViewProtocol { }

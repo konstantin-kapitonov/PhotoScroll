@@ -39,7 +39,18 @@ struct UrlsResult: Decodable {
 	let full: String
 }
 
-final class ImagesListService {
+protocol ImagesListServiceProtocol: AnyObject {
+	var photos: [Photo] { get }
+	var photosDidChangeNotification: Notification.Name { get }
+	func fetchPhotosNextPage()
+	func changeLike(
+		photoId: String,
+		isLike: Bool,
+		_ completion: @escaping (Result<Void, Error>) -> Void
+	)
+}
+
+final class ImagesListService: ImagesListServiceProtocol {
 	static let didChangeNotification = Notification.Name( "ImagesListServiceDidChange")
 	static let shared = ImagesListService()
 
@@ -52,6 +63,10 @@ final class ImagesListService {
 	private let logger = Logger(label: "PhotoScroll.ImagesListService")
 
 	private init() { }
+
+	var photosDidChangeNotification: Notification.Name {
+		Self.didChangeNotification
+	}
 
 	func fetchPhotosNextPage() {
 		guard task == nil,
