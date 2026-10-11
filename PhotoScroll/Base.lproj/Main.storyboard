@@ -184,15 +184,15 @@
             <objects>
                 <viewController storyboardIdentifier="AuthViewController" id="f23-GJ-NPm" customClass="AuthViewController" customModule="PhotoScroll" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kZq-bP-bbs">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="auth_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ltw-Zb-Dzx">
-                                <rect key="frame" x="166.66666666666666" y="366.66666666666669" width="60" height="60"/>
+                                <rect key="frame" x="166.66666666666666" y="396" width="60" height="60"/>
                                 <color key="tintColor" name="YP White"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="myD-jT-J0g" userLabel="authButton">
-                                <rect key="frame" x="16" y="655" width="361" height="48"/>
+                                <rect key="frame" x="16" y="646" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="OZz-EK-NVy"/>
@@ -229,13 +229,13 @@
         <!--Web View View Controller-->
         <scene sceneID="8W3-7H-KM9">
             <objects>
-                <viewController id="5P9-Tv-hEh" customClass="WebViewViewController" customModule="PhotoScroll" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" id="5P9-Tv-hEh" customClass="WebViewViewController" customModule="PhotoScroll" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sn3-5l-hv2">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfC-qg-dnA">
-                                <rect key="frame" x="0.0" y="70" width="393" height="723"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="734"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
