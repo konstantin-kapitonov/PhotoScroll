@@ -58,6 +58,7 @@ final class AuthViewController: UIViewController {
     // MARK: - Private Methods
     
     private func configureAuthButton() {
+        authButton.accessibilityIdentifier = "authenticate_button"
         authButton.layer.cornerRadius = 16
         authButton.layer.masksToBounds = true
     }

@@ -55,6 +55,7 @@ final class ProfileViewController: UIViewController {
     
     private func configureExitButton() {
         exitButton.setImage(.exit, for: .normal)
+        exitButton.accessibilityIdentifier = "profile_logout_button"
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
 
@@ -75,6 +76,7 @@ final class ProfileViewController: UIViewController {
     private func configureNameLabel() {
         nameLabel.font = .systemFont(ofSize: 23, weight: .bold)
         nameLabel.textColor = .ypWhite
+        nameLabel.accessibilityIdentifier = "profile_name"
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
@@ -87,6 +89,7 @@ final class ProfileViewController: UIViewController {
     private func configureUserNameLabel() {
         userNameLabel.font = .systemFont(ofSize: 13, weight: .regular)
         userNameLabel.textColor = .ypGray
+        userNameLabel.accessibilityIdentifier = "profile_username"
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(userNameLabel)
         
@@ -99,6 +102,7 @@ final class ProfileViewController: UIViewController {
     private func configureDescriptionLabel() {
         descriptionLabel.font = .systemFont(ofSize: 13, weight: .regular)
         descriptionLabel.textColor = .ypWhite
+        descriptionLabel.accessibilityIdentifier = "profile_description"
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
         

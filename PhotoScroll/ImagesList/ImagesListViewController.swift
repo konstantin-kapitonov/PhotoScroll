@@ -36,6 +36,7 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.accessibilityIdentifier = "images_list"
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 		photos = presenter.photos
 		presenter.viewDidLoad()
@@ -78,6 +79,7 @@ final class ImagesListViewController: UIViewController {
 			}
 		}
         cell.imageDateLabel.text = photo.createdAt.map(dateFormatter.string)
+        cell.likeButton.accessibilityIdentifier = photo.isLiked ? "like_button" : "unlike_button"
         cell.likeButton.setImage(photo.isLiked ? UIImage.likeActive : UIImage.likeNoActive, for: .normal)
 		cell.likeButton.removeTarget(nil, action: nil, for: .touchUpInside)
 		cell.likeButton.addTarget(self, action: #selector(onLikeButtonTap(_:)), for: .touchUpInside)
