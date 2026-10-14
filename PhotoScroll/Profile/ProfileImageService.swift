@@ -22,7 +22,12 @@ struct UserResult: Codable {
     }
 }
 
-final class ProfileImageService {
+protocol ProfileImageServiceProtocol: AnyObject {
+	var avatarURL: String? { get }
+	var profileImageDidChangeNotification: Notification.Name { get }
+}
+
+final class ProfileImageService: ProfileImageServiceProtocol {
 	static let didChangeNotification = Notification.Name( "ProfileImageProviderDidChange")
 
 	
@@ -35,7 +40,11 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     private var activeRequestID: UUID?
 
-    private init() { }
+	private init() { }
+
+	var profileImageDidChangeNotification: Notification.Name {
+		Self.didChangeNotification
+	}
 
     func fetchProfileImageURL(
         username: String,

@@ -15,9 +15,28 @@
 		A2BF13E8306989930020A07F /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = A2BF13E7306989930020A07F /* SwiftKeychainWrapper */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0DE88ED7307E968000DFF8B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D1667713018FB7700CF3B16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D1667783018FB7700CF3B16;
+			remoteInfo = PhotoScroll;
+		};
+		A22E5B44307BB7A90024CFA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0D1667713018FB7700CF3B16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D1667783018FB7700CF3B16;
+			remoteInfo = PhotoScroll;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0D1667793018FB7700CF3B16 /* PhotoScroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoScroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DBDC7C7304B0DB00024721E /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		0DE88ED1307E967F00DFF8B9 /* PhotoScrollUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoScrollUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A22E5B40307BB7A90024CFA7 /* PhotoScrollTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoScrollTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -39,6 +58,16 @@
 			path = PhotoScroll;
 			sourceTree = "<group>";
 		};
+		0DE88ED2307E967F00DFF8B9 /* PhotoScrollUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PhotoScrollUITests;
+			sourceTree = "<group>";
+		};
+		A22E5B41307BB7A90024CFA7 /* PhotoScrollTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PhotoScrollTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +84,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0DE88ECE307E967F00DFF8B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A22E5B3D307BB7A90024CFA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -62,6 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				0D16677B3018FB7700CF3B16 /* PhotoScroll */,
+				A22E5B41307BB7A90024CFA7 /* PhotoScrollTests */,
+				0DE88ED2307E967F00DFF8B9 /* PhotoScrollUITests */,
 				0DBDC7C6304B0DB00024721E /* Frameworks */,
 				0D16677A3018FB7700CF3B16 /* Products */,
 			);
@@ -71,6 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				0D1667793018FB7700CF3B16 /* PhotoScroll.app */,
+				A22E5B40307BB7A90024CFA7 /* PhotoScrollTests.xctest */,
+				0DE88ED1307E967F00DFF8B9 /* PhotoScrollUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +160,52 @@
 			productReference = 0D1667793018FB7700CF3B16 /* PhotoScroll.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0DE88ED0307E967F00DFF8B9 /* PhotoScrollUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DE88EDB307E968000DFF8B9 /* Build configuration list for PBXNativeTarget "PhotoScrollUITests" */;
+			buildPhases = (
+				0DE88ECD307E967F00DFF8B9 /* Sources */,
+				0DE88ECE307E967F00DFF8B9 /* Frameworks */,
+				0DE88ECF307E967F00DFF8B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DE88ED8307E968000DFF8B9 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0DE88ED2307E967F00DFF8B9 /* PhotoScrollUITests */,
+			);
+			name = PhotoScrollUITests;
+			packageProductDependencies = (
+			);
+			productName = PhotoScrollUITests;
+			productReference = 0DE88ED1307E967F00DFF8B9 /* PhotoScrollUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		A22E5B3F307BB7A90024CFA7 /* PhotoScrollTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A22E5B46307BB7A90024CFA7 /* Build configuration list for PBXNativeTarget "PhotoScrollTests" */;
+			buildPhases = (
+				A22E5B3C307BB7A90024CFA7 /* Sources */,
+				A22E5B3D307BB7A90024CFA7 /* Frameworks */,
+				A22E5B3E307BB7A90024CFA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A22E5B45307BB7A90024CFA7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A22E5B41307BB7A90024CFA7 /* PhotoScrollTests */,
+			);
+			name = PhotoScrollTests;
+			packageProductDependencies = (
+			);
+			productName = PhotoScrollTests;
+			productReference = A22E5B40307BB7A90024CFA7 /* PhotoScrollTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -125,6 +218,14 @@
 				TargetAttributes = {
 					0D1667783018FB7700CF3B16 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					0DE88ED0307E967F00DFF8B9 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 0D1667783018FB7700CF3B16;
+					};
+					A22E5B3F307BB7A90024CFA7 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 0D1667783018FB7700CF3B16;
 					};
 				};
 			};
@@ -149,12 +250,28 @@
 			projectRoot = "";
 			targets = (
 				0D1667783018FB7700CF3B16 /* PhotoScroll */,
+				A22E5B3F307BB7A90024CFA7 /* PhotoScrollTests */,
+				0DE88ED0307E967F00DFF8B9 /* PhotoScrollUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0D1667773018FB7700CF3B16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DE88ECF307E967F00DFF8B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A22E5B3E307BB7A90024CFA7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -171,7 +288,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0DE88ECD307E967F00DFF8B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A22E5B3C307BB7A90024CFA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0DE88ED8307E968000DFF8B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D1667783018FB7700CF3B16 /* PhotoScroll */;
+			targetProxy = 0DE88ED7307E968000DFF8B9 /* PBXContainerItemProxy */;
+		};
+		A22E5B45307BB7A90024CFA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D1667783018FB7700CF3B16 /* PhotoScroll */;
+			targetProxy = A22E5B44307BB7A90024CFA7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0D16678D3018FB7A00CF3B16 /* Debug */ = {
@@ -365,6 +509,84 @@
 			};
 			name = Release;
 		};
+		0DE88ED9307E968000DFF8B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = space.kapitonov.PhotoScrollUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PhotoScroll;
+			};
+			name = Debug;
+		};
+		0DE88EDA307E968000DFF8B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = space.kapitonov.PhotoScrollUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PhotoScroll;
+			};
+			name = Release;
+		};
+		A22E5B47307BB7A90024CFA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.PhotoScrollTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoScroll.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhotoScroll";
+			};
+			name = Debug;
+		};
+		A22E5B48307BB7A90024CFA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.PhotoScrollTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoScroll.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PhotoScroll";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -382,6 +604,24 @@
 			buildConfigurations = (
 				0D16678D3018FB7A00CF3B16 /* Debug */,
 				0D16678E3018FB7A00CF3B16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DE88EDB307E968000DFF8B9 /* Build configuration list for PBXNativeTarget "PhotoScrollUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE88ED9307E968000DFF8B9 /* Debug */,
+				0DE88EDA307E968000DFF8B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A22E5B46307BB7A90024CFA7 /* Build configuration list for PBXNativeTarget "PhotoScrollTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A22E5B47307BB7A90024CFA7 /* Debug */,
+				A22E5B48307BB7A90024CFA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -30,6 +30,8 @@ final class SingleImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        scrollView.accessibilityIdentifier = "single_image_scroll_view"
+        backButton.accessibilityIdentifier = "single_image_back_button"
         configureScrollView()
         configureImageView()
         loadFullImage()

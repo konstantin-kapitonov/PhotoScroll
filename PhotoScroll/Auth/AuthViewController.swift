@@ -10,6 +10,7 @@ import ProgressHUD
 
 protocol AuthViewControllerDelegate: AnyObject {
     func didAuthenticate(_ vc: AuthViewController)
+	func viewDidLoad()
 }
 
 final class AuthViewController: UIViewController {
@@ -44,6 +45,10 @@ final class AuthViewController: UIViewController {
                 assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
                 return
             }
+			let authHelper = AuthHelper()
+			let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+			webViewViewController.presenter = webViewPresenter
+			webViewPresenter.view = webViewViewController
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -53,6 +58,7 @@ final class AuthViewController: UIViewController {
     // MARK: - Private Methods
     
     private func configureAuthButton() {
+        authButton.accessibilityIdentifier = "authenticate_button"
         authButton.layer.cornerRadius = 16
         authButton.layer.masksToBounds = true
     }

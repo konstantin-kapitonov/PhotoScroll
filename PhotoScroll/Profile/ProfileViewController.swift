@@ -17,11 +17,7 @@ final class ProfileViewController: UIViewController {
     private lazy var descriptionLabel = UILabel()
 	
 	private let logger = Logger(label: "PhotoScroll.ProfileViewController")
-	private let profileService = ProfileService.shared
-	private let profileImageService = ProfileImageService.shared
-	private let profileLogoutService = ProfileLogoutService.shared
-	
-	private var profileImageServiceObserver: NSObjectProtocol?
+	private var presenter: ProfilePresenterProtocol!
 
     // MARK: - Lifecycle
     
@@ -35,23 +31,12 @@ final class ProfileViewController: UIViewController {
         configureUserNameLabel()
         configureDescriptionLabel()
 
-        guard let profile = profileService.profile else {
-            assertionFailure("Profile is missing")
-            return
-        }
+		presenter.viewDidLoad()
+    }
 
-        updateProfileDetails(profile: profile)
-		
-		profileImageServiceObserver = NotificationCenter.default
-			.addObserver(
-				forName: ProfileImageService.didChangeNotification,
-				object: nil,
-				queue: .main
-			) { [weak self] _ in
-				guard let self else { return }
-				self.updateAvatar()
-			}
-		updateAvatar()
+	func configure(_ presenter: ProfilePresenterProtocol) {
+		self.presenter = presenter
+		presenter.view = self
 	}
     
     // MARK: - Private Methods
@@ -70,6 +55,7 @@ final class ProfileViewController: UIViewController {
     
     private func configureExitButton() {
         exitButton.setImage(.exit, for: .normal)
+        exitButton.accessibilityIdentifier = "profile_logout_button"
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(exitButton)
 
@@ -90,6 +76,7 @@ final class ProfileViewController: UIViewController {
     private func configureNameLabel() {
         nameLabel.font = .systemFont(ofSize: 23, weight: .bold)
         nameLabel.textColor = .ypWhite
+        nameLabel.accessibilityIdentifier = "profile_name"
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
         
@@ -102,6 +89,7 @@ final class ProfileViewController: UIViewController {
     private func configureUserNameLabel() {
         userNameLabel.font = .systemFont(ofSize: 13, weight: .regular)
         userNameLabel.textColor = .ypGray
+        userNameLabel.accessibilityIdentifier = "profile_username"
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(userNameLabel)
         
@@ -114,6 +102,7 @@ final class ProfileViewController: UIViewController {
     private func configureDescriptionLabel() {
         descriptionLabel.font = .systemFont(ofSize: 13, weight: .regular)
         descriptionLabel.textColor = .ypWhite
+        descriptionLabel.accessibilityIdentifier = "profile_description"
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
         
@@ -123,17 +112,13 @@ final class ProfileViewController: UIViewController {
         ].forEach { $0.isActive = true }
     }
 
-    private func updateProfileDetails(profile: Profile) {
+    func updateProfileDetails(profile: Profile) {
         nameLabel.text = profile.name
         userNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
     }
 	
-	private func updateAvatar() {
-		guard
-			let profileImageURL = profileImageService.avatarURL,
-			let url = URL(string: profileImageURL)
-		else { return }
+	func updateAvatar(with url: URL) {
 		let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5))
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(
@@ -163,14 +148,15 @@ final class ProfileViewController: UIViewController {
 			preferredStyle: .alert
 		)
 		alert.addAction(UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-			self?.logout()
+			self?.presenter.didConfirmLogout()
 		})
 		alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
 		present(alert, animated: true)
     }
 
-	private func logout() {
-		profileLogoutService.logout()
+	func showSplashScreen() {
 		view.window?.rootViewController = SplashViewController()
 	}
 }
+
+extension ProfileViewController: ProfileViewProtocol { }
